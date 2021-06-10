@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="BikesStoresDWH" Class="BikeStoresDWHDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=SANGNM\SNSQLSERVER;Initial Catalog=BikesStoresDWH;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="BikesStoresDWHConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Dim_Brands" Member="Dim_Brands">
+    <Type Name="Dim_Brand">
+      <Column Name="brand_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="brand_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Dim_Brand_Fact_Revenue_Sale" Member="Fact_Revenue_Sales" ThisKey="brand_id" OtherKey="brand_id" Type="Fact_Revenue_Sale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dim_Categories" Member="Dim_Categories">
+    <Type Name="Dim_Category">
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="category_name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Dim_Category_Fact_Revenue_Sale" Member="Fact_Revenue_Sales" ThisKey="category_id" OtherKey="category_id" Type="Fact_Revenue_Sale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dim_Dates" Member="Dim_Dates">
+    <Type Name="Dim_Date">
+      <Column Name="date" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="month" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="quarter" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="year" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Dim_Date_Fact_Revenue_Sale" Member="Fact_Revenue_Sales" ThisKey="date" OtherKey="date" Type="Fact_Revenue_Sale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dim_Staffs" Member="Dim_Staffs">
+    <Type Name="Dim_Staff">
+      <Column Name="staff_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="first_name" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="last_name" Type="System.String" DbType="NVarChar(10) NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="active" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="store_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="manager_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Dim_Staff_Fact_Revenue_Sale" Member="Fact_Revenue_Sales" ThisKey="staff_id" OtherKey="staff_id" Type="Fact_Revenue_Sale" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dim_Products" Member="Dim_Products">
+    <Type Name="Dim_Product">
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="product_name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="brand_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="model_year" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="list_price" Type="System.Decimal" DbType="Decimal(10,2) NOT NULL" CanBeNull="false" />
+      <Association Name="Dim_Product_Fact_Revenue_Sale" Member="Fact_Revenue_Sales" ThisKey="product_id" OtherKey="product_id" Type="Fact_Revenue_Sale" />
+      <Association Name="Dim_Product_Fact_Inventory" Member="Fact_Inventories" ThisKey="product_id" OtherKey="product_id" Type="Fact_Inventory" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Dim_Stores" Member="Dim_Stores">
+    <Type Name="Dim_Store">
+      <Column Name="store_id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="store_name" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="street" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="city" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="state" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="zip_code" Type="System.String" DbType="NVarChar(5)" CanBeNull="true" />
+      <Association Name="Dim_Store_Fact_Revenue_Sale" Member="Fact_Revenue_Sales" ThisKey="store_id" OtherKey="store_id" Type="Fact_Revenue_Sale" />
+      <Association Name="Dim_Store_Fact_Inventory" Member="Fact_Inventories" ThisKey="store_id" OtherKey="store_id" Type="Fact_Inventory" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fact_Revenue_Sales" Member="Fact_Revenue_Sales">
+    <Type Name="Fact_Revenue_Sale">
+      <Column Name="brand_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="category_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="staff_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="store_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="Date NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Revenue" Type="System.Decimal" DbType="Decimal(10,2)" CanBeNull="true" />
+      <Column Name="Sales" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Dim_Brand_Fact_Revenue_Sale" Member="Dim_Brand" ThisKey="brand_id" OtherKey="brand_id" Type="Dim_Brand" IsForeignKey="true" />
+      <Association Name="Dim_Category_Fact_Revenue_Sale" Member="Dim_Category" ThisKey="category_id" OtherKey="category_id" Type="Dim_Category" IsForeignKey="true" />
+      <Association Name="Dim_Date_Fact_Revenue_Sale" Member="Dim_Date" ThisKey="date" OtherKey="date" Type="Dim_Date" IsForeignKey="true" />
+      <Association Name="Dim_Product_Fact_Revenue_Sale" Member="Dim_Product" ThisKey="product_id" OtherKey="product_id" Type="Dim_Product" IsForeignKey="true" />
+      <Association Name="Dim_Staff_Fact_Revenue_Sale" Member="Dim_Staff" ThisKey="staff_id" OtherKey="staff_id" Type="Dim_Staff" IsForeignKey="true" />
+      <Association Name="Dim_Store_Fact_Revenue_Sale" Member="Dim_Store" ThisKey="store_id" OtherKey="store_id" Type="Dim_Store" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Fact_Inventory" Member="Fact_Inventories">
+    <Type Name="Fact_Inventory">
+      <Column Name="store_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="product_id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Dim_Product_Fact_Inventory" Member="Dim_Product" ThisKey="product_id" OtherKey="product_id" Type="Dim_Product" IsForeignKey="true" />
+      <Association Name="Dim_Store_Fact_Inventory" Member="Dim_Store" ThisKey="store_id" OtherKey="store_id" Type="Dim_Store" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

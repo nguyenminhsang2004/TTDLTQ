@@ -1,0 +1,91 @@
+﻿
+<div class="container-fluid">
+    <div class="jumbotron text-center text-white" style="background-color: #40739e">
+        <h1 class="display-3">BikeStores</h1>
+        <p class="lead" style="font-size:27px;">Thống kê một số dữ liệu của cửa hàng bán xe đạp từ năm 2016 - 2018</p>
+        <hr class="m-y-md">
+    </div>
+</div>
+<section class="container mt-3 pt-3">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-header">Doanh thu</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-shopping-cart" style="font-size:25px;" aria-hidden="true"></i> {{tongdoanhthu}} USD</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-header">Doanh số</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-shopping-cart" style="font-size:25px;" aria-hidden="true"></i> {{tongdoanhso}} chiếc</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card text-white bg-warning mb-3">
+                    <div class="card-header">Cửa hàng</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-bicycle" style="font-size:25px;" aria-hidden="true"></i> {{tongsosanpham}} sản phẩm</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="card text-white bg-danger mb-3">
+                    <div class="card-header">Thương hiệu</div>
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-star" style="font-size:25px;" aria-hidden="true"></i> {{tongsothuonghieu}} thương hiệu</h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-sm-6 card border-info">
+            <div class="alert alert-primary mt-1" role="alert">
+                <b>Doanh thu của cửa hàng các năm 2016, 2017 và năm 2018</b>
+            </div>
+            <fusioncharts type="pie2d" width="100%" height="500" dataFormat="json" datasource="{{dataSourceByYear}}"></fusioncharts>
+        </div>
+        <div class="col-sm-6 card border-info">
+            <div class="alert alert-success mt-1" role="alert">
+                <b>Doanh số các loại sản phẩm của cửa hàng từ năm 2016 đến năm 2018</b>
+            </div>
+            <div fusioncharts width="100%" height="500" type="bar3d" dataSource="{{dataSourceBySales}}"></div>
+        </div>
+
+        <div class="col-sm-6 card border-info">
+            <div class="alert alert-danger mt-1" role="alert">
+                <b>Top 10 sản phẩm có doanh thu cao nhất từ năm 2016 đến năm 2018</b>
+            </div>
+            <div fusioncharts width="100%" height="500" type="column2d" dataSource="{{dataSourceByTop}}"></div>
+        </div>
+        <div class="col-sm-6 card border-info">
+            <div class="alert alert-info mt-1" role="alert">
+                <b>Số lượng sản phẩm tồn kho các năm 2016, 2017 và năm 2018</b>
+            </div>
+            <div fusioncharts width="100%" height="500" type="pyramid" dataSource="{{dataSourceByInventory}}"></div>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid">
+    <div class="footer py-3 mt-3">
+        <div class="row align-items-center">
+            <div class="col-4 text-left text-white ml-3">Website 2021</div>
+            <div class="col-4 text-right text-white">
+                <a class="mr-3 text-white" href="home">Nguyễn Minh Sang 18133045</a>
+                <a href="home" class="text-white">Đào Minh Thy 18133055</a>
+            </div>
+        </div>
+    </div>
+</footer>

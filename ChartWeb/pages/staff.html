@@ -1,0 +1,78 @@
+﻿
+<div class="container-fluid mb-3">
+    <div class="jumbotron text-center text-white" style="background-color: #40739e">
+        <h1 class="display-3">BikeStores</h1>
+        <p class="lead" style="font-size:27px;">Thống kê doanh thu của cửa hàng bán xe đạp từ năm 2016 - 2018 theo nhân viên.</p>
+        <hr class="m-y-md">
+    </div>
+</div>
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-sm-12">
+            <md-button class="md-raised md-primary" ng-show="!hienthi" ng-click="doiHienThi()">Doanh thu và doanh số</md-button>
+            <md-button class="md-raised md-primary" ng-show="hienthi" ng-click="doiHienThi()">Top nhân viên</md-button>
+        </div>
+    </div>
+    <div class="row mb-3" ng-show="hienthi">
+        <div class="col-sm-12 mt-3">
+            <md-input-container>
+                <label>Tháng</label>
+                <md-select ng-model="selectedMonth" md-selected-text="getSelectedMonth()">
+                    <md-optgroup label="Tháng">
+                        <md-option ng-repeat="item in months" ng-value="item" ng-click="changeMonth(item)">Tháng {{item}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>Năm</label>
+                <md-select ng-model="selectedYear" md-selected-text="getSelectedYear()">
+                    <md-optgroup label="Năm">
+                        <md-option ng-repeat="item in years" ng-value="item" ng-click="changeYear(item)">{{item}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+
+        <div class="col-sm-12 mt-3">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div fusioncharts width="100%" height="500" type="spline" dataSource="{{dataSourceRevenue}}"></div>
+                </div>
+                <div class="col-sm-6">
+                    <div fusioncharts width="100%" height="500" type="bar2d" dataSource="{{dataSourceSales}}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3" ng-show="!hienthi">
+        <div class="col-sm-3">
+            <md-input-container>
+                <label>Quý</label>
+                <md-select ng-model="selectedQuarter" md-selected-text="getSelectedQuarter()">
+                    <md-optgroup label="Quý">
+                        <md-option ng-repeat="item in quarters" ng-value="item" ng-click="changeQuarter(item)">Quý {{item}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>Năm</label>
+                <md-select ng-model="selectedYearTop" md-selected-text="getSelectedYearTop()">
+                    <md-optgroup label="Năm">
+                        <md-option ng-repeat="item in years" ng-value="item" ng-click="changeYearTop(item)">{{item}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>Top nhân viên</label>
+                <md-select ng-model="selectedSelectedStaffTop" md-selected-text="getSelectedStaffTop()">
+                    <md-optgroup label="Top">
+                        <md-option ng-repeat="item in top" ng-value="item" ng-click="changeStaffTop(item)">Top {{item}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="col-sm-9">
+            <div fusioncharts width="100%" height="700" type="pyramid" dataSource="{{dataSourceStaffTop}}"></div>
+        </div>
+    </div>
+</div>

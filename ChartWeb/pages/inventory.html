@@ -1,0 +1,45 @@
+﻿<div class="container-fluid">
+    <div class="jumbotron text-center text-white" style="background-color: #40739e">
+        <h1 class="display-3">BikeStores</h1>
+        <p class="lead" style="font-size:27px;">Thống kê dữ liệu của cửa hàng bán xe đạp từ năm 2016 - 2018 theo số lượng bán ra và tồn kho.</p>
+        <hr class="m-y-md">
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <md-button class="md-raised md-primary" ng-show="!display" ng-click="changeDisplay()">Loại sản phẩm và Sản phẩm</md-button>
+            <md-button class="md-raised md-primary" ng-show="display" ng-click="changeDisplay()">Thương hiệu và cửa hàng</md-button>
+        </div>
+        <div class="col-sm-12">
+            <div ng-show="display" class="row">
+                <div class="col-sm-6">
+                    <div fusioncharts width="100%" height="600" type="msbar3d" dataSource="{{dataSourceCategories}}"></div>
+                </div>
+                <div class="col-sm-6">
+                    <div fusioncharts width="100%" height="600" type="scrollcolumn2d" dataSource="{{dataSourceProduct}}"></div>
+                </div>
+            </div>
+
+            <div ng-show="!display" class="row">
+                <div class="col-sm-6">
+                    <div  fusioncharts width="100%" height="600" type="msspline" dataSource="{{dataSourceBrand}}"></div>
+                </div>
+                <div class="col-sm-6">
+                    <div fusioncharts width="100%" height="600" type="scrollcombi2d" dataSource="{{dataSourceStore}}"></div>
+                </div>
+            </div>
+
+        </div>
+        <!--<div class="col-sm-12">
+            
+        </div>
+        <div class="col-sm-12">
+            <div ng-show="display" fusioncharts width="100%" height="700" type="msspline" dataSource="{{dataSourceBrand}}"></div>
+        </div>
+        <div class="col-sm-12">
+            <div fusioncharts width="50%" height="600" type="scrollcombi2d" dataSource="{{dataSourceStore}}"></div>
+        </div>-->
+
+    </div>
+</div>

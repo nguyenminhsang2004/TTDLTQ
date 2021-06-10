@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BikeStores</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/Home/Index/">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="~/Scripts/vendor/angular-material.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="~/css/index.css" rel="stylesheet" />
+</head>
+<body ng-app="myApp" ng-controller="MyController">
+    <nav class="navbar navbar-expand-sm navbar-dark bg-primary mb-3 pb-3">
+        <a class="navbar-brand" href="home"> <i class="fa fa-home" style="font-size:25px;"></i> Dashboard</a>
+        <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                aria-expanded="false" aria-label="Toggle navigation"></button>
+        <div class="collapse navbar-collapse justify-content-end" id="collapsibleNavId">
+            <ul class="navbar-nav mt-2 mt-lg-0">
+                <li class="nav-item active">
+                    <a class="nav-link" href="categories">Loại sản phẩm</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="products">Sản phẩm </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="inventory">Tồn kho </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="staff">Nhân viên </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <div ng-view></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Angular JS-->
+    <script src="~/Scripts/vendor/angular-1.5.min.js"></script>
+    <script src="~/Scripts/vendor/angular-route.min.js"></script>
+    <script src="~/Scripts/vendor/angular-animate.min.js"></script>
+    <script src="~/Scripts/vendor/angular-aria.min.js"></script>
+    <script src="~/Scripts/vendor/angular-messages.min.js"></script>
+    <script src="~/Scripts/vendor/angular-material.min.js"></script>
+    <!-- fusioncharts-->
+    <script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+    <!-- Including the angularjs-fusioncharts directive-->
+    @*<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/angularjs-fusioncharts.min.js"></script>*@
+    <!-- Including the fusion theme -->
+    <script src="~/Scripts/vendor/angular-fusioncharts.min.js"></script>
+    @*<script type="text/javascript" src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>*@
+    <script src="~/Scripts/vendor/fusioncharts.theme.fusion.js"></script>
+    <script src="~/Scripts/js/app.js"></script>
+    <script src="~/Scripts/js/app.route.js"></script>
+    <script src="~/Scripts/js/home.module.js"></script>
+    <script src="~/Scripts/js/categories.module.js"></script>
+    <script src="~/Scripts/js/product.module.js"></script>
+    <script src="~/Scripts/js/inventory.module.js"></script>
+    <script src="~/Scripts/js/staff.module.js"></script>
+</body>
+</html>
