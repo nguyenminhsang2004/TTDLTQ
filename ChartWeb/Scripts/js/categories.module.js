@@ -48,7 +48,7 @@ app.controller('categoriesController', function ($scope, $http, $rootScope) {
             return $scope.selectedYear;
         }
         else {
-            return "Year";
+            return "Năm";
         }
     };
     $scope.changeYear = (item) => {
