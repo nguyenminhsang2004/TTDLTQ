@@ -2,7 +2,48 @@
 
 app.controller('homeController', function ($scope, $http) {
 
-    
+    $scope.viewWorldCharts = (model) => {
+        $scope.dataSourceWorld = {
+            "chart": {
+                "caption": "Doanh thu theo khu vực",
+                "subcaption": "2016 - 2018",
+                "numbersuffix": "%",
+                "includevalueinlabels": "1",
+                "labelsepchar": ": ",
+                "entityFillHoverColor": "#FFF9C4",
+                "theme": "fusion"
+            },
+            "colorrange": {
+                "minvalue": "0",
+                "code": "#FFE0B2",
+                "gradient": "1",
+                "color": [
+
+                    {
+                        "minvalue": "0",
+                        "maxvalue": "0.25",
+                        "color": "#FFD74D"
+                    },
+                    {
+                        "minvalue": "0.25",
+                        "maxvalue": "0.5",
+                        "color": "#FB8C00"
+                    },
+                    {
+                        "minvalue": "0.5",
+                        "maxvalue": "0.75",
+                        "color": "#E66000"
+                    },
+                    {
+                        "minvalue": "0.75",
+                        "maxvalue": "1",
+                        "color": "#E60000"
+                    }
+                ]
+            },
+            "data": model
+        };
+    }
 
     $scope.chartByYear = (model) => {
         $scope.dataSourceByYear = {
@@ -106,4 +147,15 @@ app.controller('homeController', function ($scope, $http) {
         }, (err) => { console.log(err.data); });
 
     $scope.chartByInventory($scope.modelInventory);
+
+
+    $scope.worldCharts = [];
+    $http.get("/api/home/worldcharts")
+        .then((res) => {
+            angular.forEach(res.data, (item) => {
+                $scope.worldCharts.push(item);
+            });
+        }, (err) => { console.log(err.data); });
+
+    $scope.viewWorldCharts($scope.worldCharts);
 })

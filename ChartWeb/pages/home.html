@@ -50,33 +50,45 @@
 </section>
 <div class="container-fluid mt-3">
     <div class="row">
+
         <div class="col-sm-6 card border-info">
-            <div class="alert alert-primary mt-1" role="alert">
+            <div class="alert alert-warning mt-1 text-center" role="alert">
+                <b>Doanh thu theo khu vực từ năm 2016 - 2018</b>
+            </div>
+            <fusioncharts type="world" width="100%" height="500" dataFormat="json" dataSource="{{dataSourceWorld}}"></fusioncharts>           
+        </div>
+
+        <div class="col-sm-6 card border-info">
+            <div class="alert alert-primary mt-1 text-center" role="alert">
                 <b>Doanh thu của cửa hàng các năm 2016, 2017 và năm 2018</b>
             </div>
             <fusioncharts type="pie2d" width="100%" height="500" dataFormat="json" datasource="{{dataSourceByYear}}"></fusioncharts>
         </div>
+
         <div class="col-sm-6 card border-info">
-            <div class="alert alert-success mt-1" role="alert">
+            <div class="alert alert-success mt-1 text-center" role="alert">
                 <b>Doanh số các loại sản phẩm của cửa hàng từ năm 2016 đến năm 2018</b>
             </div>
             <div fusioncharts width="100%" height="500" type="bar3d" dataSource="{{dataSourceBySales}}"></div>
         </div>
 
         <div class="col-sm-6 card border-info">
-            <div class="alert alert-danger mt-1" role="alert">
-                <b>Top 10 sản phẩm có doanh thu cao nhất từ năm 2016 đến năm 2018</b>
-            </div>
-            <div fusioncharts width="100%" height="500" type="column2d" dataSource="{{dataSourceByTop}}"></div>
-        </div>
-        <div class="col-sm-6 card border-info">
-            <div class="alert alert-info mt-1" role="alert">
+            <div class="alert alert-info mt-1 text-center" role="alert">
                 <b>Số lượng sản phẩm tồn kho các năm 2016, 2017 và năm 2018</b>
             </div>
             <div fusioncharts width="100%" height="500" type="pyramid" dataSource="{{dataSourceByInventory}}"></div>
         </div>
+
+        <div class="col-sm-12 card border-info">
+            <div class="alert alert-danger mt-1 text-center" role="alert">
+                <b>Top 10 sản phẩm có doanh thu cao nhất từ năm 2016 đến năm 2018</b>
+            </div>
+            <div fusioncharts width="100%" height="500" type="column2d" dataSource="{{dataSourceByTop}}"></div>
+        </div>
     </div>
 </div>
+
+
 
 <footer class="container-fluid">
     <div class="footer py-3 mt-3">

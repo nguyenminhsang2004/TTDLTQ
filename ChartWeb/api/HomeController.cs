@@ -143,6 +143,38 @@ namespace ChartWeb.api
             return res;
         }
 
-        
+        [Route("worldcharts")]
+        public List<ViewWorldChart> getWorldChart()
+        {
+            List<ViewWorldChart> res = new List<ViewWorldChart>();
+            var model = context.Fact_Revenue_Sales.ToList();
+            var store = context.Dim_Stores.ToList();
+            double revenue = 0;
+            double temp = 0;
+            model.ForEach(x =>
+            {
+                revenue += (double)x.Revenue;
+            });
+            store.ForEach(s =>
+            {
+                string id = "SA";
+                double value = 0;
+                model.ForEach(t =>
+                {
+                    if (t.Dim_Store.state == s.state)
+                        value += (double)t.Revenue;
+                });
+                if (s.state == "NY") id = "NA";
+                if (id == "SA") temp += value/revenue;
+                res.Add(new ViewWorldChart { id = id, value = (value/revenue).ToString(), showLabel = "1" });
+            });
+
+            res.ForEach(x =>
+            {
+                if (x.id == "SA") x.value = temp.ToString();
+            });
+            return res;
+        }
+
     }
 }
