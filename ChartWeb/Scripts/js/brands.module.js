@@ -8,7 +8,7 @@ app.controller('brandsController', function ($scope, $http, $rootScope) {
         $scope.myDataSourceRevenue = {
             chart: {
                 caption: title,
-                subcaption: "2016 - 2018",
+                subcaption: "Revenue",
                 yaxisname: "Doanh thu (USD)",
                 decimals: "1",
                 theme: "fusion"
@@ -36,7 +36,7 @@ app.controller('brandsController', function ($scope, $http, $rootScope) {
             chart: {
                 caption: title,
                 yaxisname: "Doanh số (chiếc)",
-                subcaption: "[2016 - 2018]",
+                subcaption: "Sales",
                 numbersuffix: "",
                 rotatelabels: "1",
                 setadaptiveymin: "1",
