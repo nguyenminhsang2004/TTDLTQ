@@ -1,0 +1,36 @@
+﻿<div class="container-fluid">
+    <div class="jumbotron text-center text-white" style="background-color: #40739e">
+        <h1 class="display-3">BikeStores</h1>
+        <p class="lead" style="font-size:27px;">Thống kê doanh thu của cửa hàng bán xe đạp từ năm 2016 - 2018 theo thương hiệu ({{tongsothuonghieu}} thương hiệu).</p>
+        <hr class="m-y-md">
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <md-input-container>
+                <label>Tháng</label>
+                <md-select ng-model="selectedMonth" md-selected-text="getSelectedMonth()">
+                    <md-optgroup label="Tháng">
+                        <md-option ng-repeat="item in months" ng-value="item" ng-click="changeMonth(item)">Tháng {{item}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+        <div class="col-sm-6">
+            <div fusioncharts
+                 width="100%"
+                 height="600"
+                 type="mscolumn2d"
+                 dataSource="{{myDataSourceRevenue}}"></div>
+        </div>
+
+        <div class="col-sm-6">
+            <div fusioncharts
+                 width="100%"
+                 height="600"
+                 type="mscolumn2d"
+                 dataSource="{{myDataSourceSales}}"></div>
+        </div>
+    </div>
+</div>

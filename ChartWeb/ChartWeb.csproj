@@ -137,6 +137,7 @@
     <Compile Include="api\InventoryController.cs" />
     <Compile Include="api\ProductsController.cs" />
     <Compile Include="api\StaffController.cs" />
+    <Compile Include="api\StoresController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\StoreModel.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Models\ViewLabel.cs" />
     <Compile Include="Models\ViewValue.cs" />
@@ -167,18 +169,22 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="pages\brands.html" />
     <Content Include="pages\categories.html" />
     <Content Include="pages\home.html" />
     <Content Include="pages\inventory.html" />
     <Content Include="pages\product.html" />
     <Content Include="pages\staff.html" />
+    <Content Include="pages\stores.html" />
     <Content Include="Scripts\js\app.js" />
     <Content Include="Scripts\js\app.route.js" />
+    <Content Include="Scripts\js\brands.module.js" />
     <Content Include="Scripts\js\categories.module.js" />
     <Content Include="Scripts\js\home.module.js" />
     <Content Include="Scripts\js\inventory.module.js" />
     <Content Include="Scripts\js\product.module.js" />
     <Content Include="Scripts\js\staff.module.js" />
+    <Content Include="Scripts\js\stores.module.js" />
     <Content Include="Scripts\plugin\bootstrap.js" />
     <Content Include="Scripts\plugin\bootstrap.min.js" />
     <Content Include="BikeStoresDWH.dbml">

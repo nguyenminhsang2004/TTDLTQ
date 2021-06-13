@@ -6,6 +6,14 @@
         templateUrl: '../../pages/home.html',
         controller: 'homeController'
     })
+    .when('/stores', {
+        templateUrl: '../../pages/stores.html',
+        controller: 'storesController'
+    })
+    .when('/brands', {
+        templateUrl: '../../pages/brands.html',
+        controller: 'brandsController'
+    })
     .when('/categories', {
         templateUrl: '../../pages/categories.html',
         controller: 'categoriesController'
