@@ -1,7 +1,6 @@
 ﻿/// <reference path="../vendor/angular-1.5.min.js" />
 
 app.controller('homeController', function ($scope, $http) {
-
     $scope.viewWorldCharts = (model) => {
         $scope.dataSourceWorld = {
             "chart": {
@@ -71,8 +70,6 @@ app.controller('homeController', function ($scope, $http) {
             },
             data: model
         };
-
-
     }
 
     $scope.chartByTop = (model) => {
@@ -100,21 +97,19 @@ app.controller('homeController', function ($scope, $http) {
                 numberprefix: "",
                 plottooltext:
                     "<b>$label</b> có <b>$dataValue</b> tồn kho",
-                is2d:"0"
+                is2d: "0"
             },
             data: model
         };
     }
 
-
-
     $scope.modelByYear = [];
     $http.get("/api/home/revenuebyyear")
-    .then((res) => {
-        angular.forEach(res.data, (item) => {
-            $scope.modelByYear.push(item);
-        });
-    }, (err) => { console.log(err.data); });
+        .then((res) => {
+            angular.forEach(res.data, (item) => {
+                $scope.modelByYear.push(item);
+            });
+        }, (err) => { console.log(err.data); });
 
     $scope.chartByYear($scope.modelByYear);
 
@@ -147,7 +142,6 @@ app.controller('homeController', function ($scope, $http) {
         }, (err) => { console.log(err.data); });
 
     $scope.chartByInventory($scope.modelInventory);
-
 
     $scope.worldCharts = [];
     $http.get("/api/home/worldcharts")

@@ -1,9 +1,6 @@
 ﻿using ChartWeb.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ChartWeb.api
@@ -11,18 +8,20 @@ namespace ChartWeb.api
     [RoutePrefix("api/inventory")]
     public class InventoryController : ApiController
     {
-        BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+        private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("categories")]
         public List<ViewLabel> getCategoryLabel()
         {
             List<ViewLabel> res = new List<ViewLabel>();
-            var model = context.Dim_Categories.Select(x => new {x.category_name }).ToList();
+            var model = context.Dim_Categories.Select(x => new { x.category_name }).ToList();
             model.ForEach(x =>
             {
                 res.Add(new ViewLabel { label = x.category_name.ToString() });
             });
             return res;
         }
+
         [Route("salesbycategories")]
         public List<ViewValue> getSalesCategories()
         {
@@ -43,6 +42,7 @@ namespace ChartWeb.api
 
             return res;
         }
+
         [Route("inventorybycategories")]
         public List<ViewValue> getInventoryCategories()
         {
@@ -204,6 +204,7 @@ namespace ChartWeb.api
 
             return res;
         }
+
         [Route("inventorybystores")]
         public List<ViewValue> getInventoryStores()
         {

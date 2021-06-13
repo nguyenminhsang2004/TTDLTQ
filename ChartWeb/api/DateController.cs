@@ -13,7 +13,6 @@ namespace ChartWeb.api
         [Route("getall")]
         public List<string> getAllYear()
         {
-
             List<string> res = new List<string>();
             res.Add("None");
             var date = context.Dim_Dates.Select(x => x.year.ToString()).ToList();
@@ -24,6 +23,7 @@ namespace ChartWeb.api
             });
             return res;
         }
+
         [Route("year")]
         public List<ViewLabel> getAll()
         {

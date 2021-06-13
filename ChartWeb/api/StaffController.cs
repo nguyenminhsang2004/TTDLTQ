@@ -1,9 +1,6 @@
 ﻿using ChartWeb.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ChartWeb.api
@@ -11,7 +8,8 @@ namespace ChartWeb.api
     [RoutePrefix("api/staffs")]
     public class StaffController : ApiController
     {
-        BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+        private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("revenue")]
         public List<Revenue> getRevenue(int year, int month)
         {
@@ -24,7 +22,7 @@ namespace ChartWeb.api
                 temp = 3;
             double revenue = 0;
             List<Revenue> res = new List<Revenue>();
-            var categories = context.Dim_Staffs.Select(x => new { x.staff_id, x.first_name,x.last_name }).ToList();
+            var categories = context.Dim_Staffs.Select(x => new { x.staff_id, x.first_name, x.last_name }).ToList();
             var model = context.Fact_Revenue_Sales.Select(x => new { x.staff_id, x.Revenue, x.Dim_Date.year, x.Dim_Date.month }).ToList();
             switch (temp)
             {
@@ -78,6 +76,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         categories.ForEach(x =>
@@ -164,6 +163,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         categories.ForEach(x =>
@@ -183,6 +183,7 @@ namespace ChartWeb.api
             }
             return res;
         }
+
         [Route("topstaff")]
         public List<Revenue> getRevenueStaff(int top, int quarter, int year)
         {
@@ -250,6 +251,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         staff.ForEach(x =>
@@ -269,6 +271,5 @@ namespace ChartWeb.api
             }
             return res.OrderByDescending(x => x.value).Take(top).ToList();
         }
-
     }
 }

@@ -24,23 +24,23 @@ app.controller('categoriesController', function ($scope, $http, $rootScope) {
 
     $scope.model = [];
     $http.get('/api/categories/revenue/?year=0&month=0')
-    .then(
-        (res) => {
-            angular.forEach(res.data, (item) => {
-                $scope.model.push(item);
-            })
-        },
-        (err) => { console.log(err); }
-    );
+        .then(
+            (res) => {
+                angular.forEach(res.data, (item) => {
+                    $scope.model.push(item);
+                })
+            },
+            (err) => { console.log(err); }
+        );
     $scope.viewChart($scope.model, "Doanh thu theo từng loại sản phẩm 2016 - 2018");
 
     $http.get('/api/dates/getall')
-    .then(
-        (res) => {
-            $scope.years = res.data;
-        },
-        (err) => { console.log(err); }
-    );
+        .then(
+            (res) => {
+                $scope.years = res.data;
+            },
+            (err) => { console.log(err); }
+        );
 
     $scope.selectedYear = undefined;
     $scope.getSelectedYear = () => {
@@ -92,15 +92,15 @@ app.controller('categoriesController', function ($scope, $http, $rootScope) {
         var apiUrl = '/api/categories/revenue/?year=' + year + '&month=' + month;
 
         $http.get(apiUrl)
-        .then(
-            (res) => {
-                $scope.model = [];
-                angular.forEach(res.data, (item) => {
-                    $scope.model.push(item);
-                });
-                $scope.viewChart($scope.model, $scope.title);
-            },
-            (err) => { console.log(err); }
-        );
+            .then(
+                (res) => {
+                    $scope.model = [];
+                    angular.forEach(res.data, (item) => {
+                        $scope.model.push(item);
+                    });
+                    $scope.viewChart($scope.model, $scope.title);
+                },
+                (err) => { console.log(err); }
+            );
     }
 })

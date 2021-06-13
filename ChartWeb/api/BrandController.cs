@@ -9,6 +9,7 @@ namespace ChartWeb.api
     public class BrandController : ApiController
     {
         private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("label")]
         public List<ViewModel> getAllBrand()
         {
@@ -21,6 +22,7 @@ namespace ChartWeb.api
             });
             return res;
         }
+
         [Route("getlabel")]
         public List<ViewLabel> getAllLabelBrand()
         {
@@ -32,8 +34,9 @@ namespace ChartWeb.api
             });
             return res;
         }
+
         [Route("revenue")]
-        public List<Revenue> getRevenue(int year,int month)
+        public List<Revenue> getRevenue(int year, int month)
         {
             int temp = 0;
             if (year == 0 && month == 0)
@@ -59,11 +62,12 @@ namespace ChartWeb.api
                                     revenue += (double)t.Revenue;
                                 }
                             });
-                            res.Add(new Revenue {label = x.brand_name, value = revenue });
+                            res.Add(new Revenue { label = x.brand_name, value = revenue });
                             revenue = 0;
                         });
                     }
                     break;
+
                 case 1:
                     {
                         var modelbrand = context.Dim_Brands.ToList();
@@ -81,6 +85,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 2:
                     {
                         var modelbrand = context.Dim_Brands.ToList();
@@ -98,6 +103,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         var modelbrand = context.Dim_Brands.ToList();
@@ -119,6 +125,7 @@ namespace ChartWeb.api
 
             return res;
         }
+
         [Route("sales")]
         public List<Revenue> getSales(int year, int month)
         {
@@ -151,6 +158,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 1:
                     {
                         var modelbrand = context.Dim_Brands.ToList();
@@ -168,6 +176,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 2:
                     {
                         var modelbrand = context.Dim_Brands.ToList();
@@ -185,6 +194,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         var modelbrand = context.Dim_Brands.ToList();

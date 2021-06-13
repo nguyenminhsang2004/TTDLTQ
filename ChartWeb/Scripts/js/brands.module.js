@@ -4,7 +4,7 @@ app.controller('brandsController', function ($scope, $http, $rootScope) {
     $scope.year = "None";
     $scope.month = "None";
 
-    $scope.viewChartRevenue = (model,title) => {
+    $scope.viewChartRevenue = (model, title) => {
         $scope.myDataSourceRevenue = {
             chart: {
                 caption: title,
@@ -20,14 +20,14 @@ app.controller('brandsController', function ($scope, $http, $rootScope) {
     $scope.modelRevenue = [];
 
     $http.get("/api/brands/revenue/?year=0&month=0")
-    .then(
-        (res) => {
-            angular.forEach(res.data, (item) => {
-                $scope.modelRevenue.push(item);
-            });
-        },
-        (err) => { console.log(err.data); }
-    );
+        .then(
+            (res) => {
+                angular.forEach(res.data, (item) => {
+                    $scope.modelRevenue.push(item);
+                });
+            },
+            (err) => { console.log(err.data); }
+        );
 
     $scope.viewChartRevenue($scope.modelRevenue, "Doanh thu của từng thương hiệu (USD).");
 
@@ -123,16 +123,15 @@ app.controller('brandsController', function ($scope, $http, $rootScope) {
         var apiUrl = '/api/brands/revenue/?year=' + year + '&month=' + month;
         $scope.valueRevenue = [];
         $http.get(apiUrl)
-        .then(
-            (res) => {
-                angular.forEach(res.data, (item) => {
-                    $scope.valueRevenue.push(item);
-                });
-                $scope.viewChartRevenue($scope.valueRevenue, $scope.title);
-            },
-            (err) => { console.log(err); }
-        );
-
+            .then(
+                (res) => {
+                    angular.forEach(res.data, (item) => {
+                        $scope.valueRevenue.push(item);
+                    });
+                    $scope.viewChartRevenue($scope.valueRevenue, $scope.title);
+                },
+                (err) => { console.log(err); }
+            );
     }
 
     $scope.changeChartSales = (year, month) => {
@@ -164,6 +163,5 @@ app.controller('brandsController', function ($scope, $http, $rootScope) {
                 },
                 (err) => { console.log(err); }
             );
-
     }
 })

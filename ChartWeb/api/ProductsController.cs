@@ -9,11 +9,12 @@ namespace ChartWeb.api
     public class ProductsController : ApiController
     {
         private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("label")]
         public List<ViewLabel> getAllProductLabel(int brand)
         {
             List<ViewLabel> res = new List<ViewLabel>();
-           
+
             if (brand == 0)
             {
                 var name = context.Dim_Products.Select(x => new { x.product_name }).ToList();
@@ -33,8 +34,9 @@ namespace ChartWeb.api
 
             return res;
         }
+
         [Route("revenue")]
-        public List<ViewValue> getAllProductRevenue(int brand , int year, int month)
+        public List<ViewValue> getAllProductRevenue(int brand, int year, int month)
         {
             int temp = 0;
             if (brand == 0)
@@ -66,7 +68,7 @@ namespace ChartWeb.api
             {
                 case 0:
                     {
-                        var products = context.Dim_Products.Select(x => new { x.product_id,x.brand_id }).Where(x => x.brand_id == brand).ToList();
+                        var products = context.Dim_Products.Select(x => new { x.product_id, x.brand_id }).Where(x => x.brand_id == brand).ToList();
                         products.ForEach(x =>
                         {
                             model.ForEach(t =>
@@ -81,6 +83,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 1:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id }).ToList();
@@ -98,6 +101,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 2:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id }).ToList();
@@ -115,6 +119,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id }).ToList();
@@ -132,6 +137,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 4:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id }).ToList();
@@ -149,6 +155,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 5:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id, x.brand_id }).Where(x => x.brand_id == brand).ToList();
@@ -166,6 +173,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 6:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id, x.brand_id }).Where(x => x.brand_id == brand).ToList();
@@ -183,6 +191,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 7:
                     {
                         var products = context.Dim_Products.Select(x => new { x.product_id, x.brand_id }).Where(x => x.brand_id == brand).ToList();

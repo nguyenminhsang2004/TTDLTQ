@@ -1,7 +1,6 @@
 ﻿/// <reference path="../vendor/angular-1.5.min.js" />
 
 app.controller('staffController', function ($scope, $http, $rootScope) {
-
     $scope.year = "None";
     $scope.yearTop = "None";
     $scope.month = "None";
@@ -43,12 +42,12 @@ app.controller('staffController', function ($scope, $http, $rootScope) {
     $scope.viewChartRevenue($scope.modelRevenue, "Doanh thu của từng nhân viên 2016 - 2018");
 
     $http.get('/api/dates/getall')
-    .then(
-        (res) => {
-            $scope.years = res.data;
-        },
-        (err) => { console.log(err); }
-    );
+        .then(
+            (res) => {
+                $scope.years = res.data;
+            },
+            (err) => { console.log(err); }
+        );
 
     $scope.selectedYear = undefined;
     $scope.getSelectedYear = () => {
@@ -102,18 +101,17 @@ app.controller('staffController', function ($scope, $http, $rootScope) {
         var apiUrl = '/api/staffs/revenue/?year=' + year + '&month=' + month;
 
         $http.get(apiUrl)
-        .then(
-            (res) => {
-                $scope.model = [];
-                angular.forEach(res.data, (item) => {
-                    $scope.model.push(item);
-                });
-                $scope.viewChartRevenue($scope.model, $scope.title);
-            },
-            (err) => { console.log(err); }
-        );
+            .then(
+                (res) => {
+                    $scope.model = [];
+                    angular.forEach(res.data, (item) => {
+                        $scope.model.push(item);
+                    });
+                    $scope.viewChartRevenue($scope.model, $scope.title);
+                },
+                (err) => { console.log(err); }
+            );
     }
-
 
     $scope.viewChartSales = (dataSource, title) => {
         $scope.dataSourceSales = {
@@ -130,14 +128,14 @@ app.controller('staffController', function ($scope, $http, $rootScope) {
 
     $scope.modelSales = [];
     $http.get('/api/staffs/sales/?year=0&month=0')
-    .then(
-        (res) => {
-            angular.forEach(res.data, (item) => {
-                $scope.modelSales.push(item);
-            })
-        },
-        (err) => { console.log(err); }
-    );
+        .then(
+            (res) => {
+                angular.forEach(res.data, (item) => {
+                    $scope.modelSales.push(item);
+                })
+            },
+            (err) => { console.log(err); }
+        );
     $scope.viewChartSales($scope.modelSales, "Doanh số của từng nhân viên 2016 - 2018");
 
     $scope.changeChartSales = (year, month) => {
@@ -153,18 +151,17 @@ app.controller('staffController', function ($scope, $http, $rootScope) {
         var apiUrl = '/api/staffs/sales/?year=' + year + '&month=' + month;
 
         $http.get(apiUrl)
-        .then(
-            (res) => {
-                $scope.model = [];
-                angular.forEach(res.data, (item) => {
-                    $scope.model.push(item);
-                });
-                $scope.viewChartSales($scope.model, $scope.title);
-            },
-            (err) => { console.log(err); }
-        );
+            .then(
+                (res) => {
+                    $scope.model = [];
+                    angular.forEach(res.data, (item) => {
+                        $scope.model.push(item);
+                    });
+                    $scope.viewChartSales($scope.model, $scope.title);
+                },
+                (err) => { console.log(err); }
+            );
     }
-
 
     $scope.quarters = ["None", 1, 2, 3, 4];
 
@@ -257,15 +254,15 @@ app.controller('staffController', function ($scope, $http, $rootScope) {
         var apiUrl = '/api/staffs/topstaff/?top=' + top + '&quarter=' + quarter + '&year=' + year;
 
         $http.get(apiUrl)
-        .then(
-            (res) => {
-                $scope.model = [];
-                angular.forEach(res.data, (item) => {
-                    $scope.model.push(item);
-                });
-                $scope.viewChartStaffTop($scope.model, $scope.title);
-            },
-            (err) => { console.log(err); }
-        );
+            .then(
+                (res) => {
+                    $scope.model = [];
+                    angular.forEach(res.data, (item) => {
+                        $scope.model.push(item);
+                    });
+                    $scope.viewChartStaffTop($scope.model, $scope.title);
+                },
+                (err) => { console.log(err); }
+            );
     }
 })

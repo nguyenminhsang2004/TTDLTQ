@@ -9,6 +9,7 @@ namespace ChartWeb.api
     public class CategoriesController : ApiController
     {
         private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("getall")]
         public List<ViewModel> getAllCategories()
         {
@@ -22,6 +23,7 @@ namespace ChartWeb.api
 
             return res;
         }
+
         [Route("revenue")]
         public List<Revenue> getRevenueCategories(int year, int month)
         {
@@ -88,6 +90,7 @@ namespace ChartWeb.api
                         });
                     }
                     break;
+
                 case 3:
                     {
                         categories.ForEach(x =>

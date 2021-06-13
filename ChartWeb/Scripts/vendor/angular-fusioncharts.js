@@ -19,11 +19,10 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
-(function() {
+(function () {
     var fc = angular.module('ng-fusioncharts', []);
 
-
-    fc.directive('fusioncharts', ['$http', function($http) {
+    fc.directive('fusioncharts', ['$http', function ($http) {
         return {
             scope: {
                 width: '@',
@@ -49,322 +48,322 @@
                 map: '@',
                 markers: '@'
             },
-            link: function(scope, element, attrs) {
+            link: function (scope, element, attrs) {
                 var observeConf = {
-                        // non-data componenet observers
-                        NDCObserver: {
-                            'width': {
-                                ifExist: false,
-                                observer: function(newVal) {
-                                    if (newVal && chartConfigObject.width != newVal) {
-                                        chartConfigObject.width = newVal;
-                                        chart.resizeTo(scope.width, scope.height);
-                                    }
+                    // non-data componenet observers
+                    NDCObserver: {
+                        'width': {
+                            ifExist: false,
+                            observer: function (newVal) {
+                                if (newVal && chartConfigObject.width != newVal) {
+                                    chartConfigObject.width = newVal;
+                                    chart.resizeTo(scope.width, scope.height);
                                 }
-                            },
-                            'height': {
-                                ifExist: false,
-                                observer: function(newVal) {
-                                    if (newVal && chartConfigObject.height != newVal) {
-                                        chartConfigObject.height = newVal;
-                                        chart.resizeTo(scope.width, scope.height);
-                                    }
+                            }
+                        },
+                        'height': {
+                            ifExist: false,
+                            observer: function (newVal) {
+                                if (newVal && chartConfigObject.height != newVal) {
+                                    chartConfigObject.height = newVal;
+                                    chart.resizeTo(scope.width, scope.height);
                                 }
-                            },
+                            }
+                        },
 
-                            'datasource': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (dataStringStore.dataSource != newVal) {
-                                        dataStringStore.dataSource = newVal;
-                                        if (chartConfigObject.dataFormat === 'json') {
-                                            chartConfigObject.dataSource = JSON.parse(newVal);
-                                            setChartData();
-                                        } else {
-                                            chartConfigObject.dataSource = newVal;
-                                            if (chartConfigObject.dataFormat === 'xml') {
-                                                chart.setXMLData(newVal);
-                                            } else if (chartConfigObject.dataFormat === 'jsonurl') {
-                                                chart.setJSONUrl(newVal);
-                                            } else if (chartConfigObject.dataFormat === 'xmlurl') {
-                                                chart.setXMLUrl(newVal);
-                                            }
-                                        }
-                                    }
-                                }
-                            },
-                            'type': {
-                                ifExist: false,
-                                observer: function(newVal) {
-                                    if (newVal && chartConfigObject.type != newVal) {
-                                        chartConfigObject.type = newVal;
-										// createFCChart();
-										chart.chartType(newVal);
-                                    }
-                                }
-                            },
-                            'config': {
-                                ifExist: false,
-                                observer: function(newVal) {
-                                    var configObj,
-                                        attr,
-                                        doReRender = false;
-                                    if (newVal) {
-                                        configObj = JSON.parse(newVal);
-                                        for (attr in configObj) {
-                                            // detect the value change
-                                            if (chartConfigObject[attr] != configObj[attr]) {
-                                                doReRender = true;
-                                                chartConfigObject[attr] = configObj[attr];
-                                            }
-                                        }
-                                        if (doReRender) {
-                                            createFCChart();
+                        'datasource': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (dataStringStore.dataSource != newVal) {
+                                    dataStringStore.dataSource = newVal;
+                                    if (chartConfigObject.dataFormat === 'json') {
+                                        chartConfigObject.dataSource = JSON.parse(newVal);
+                                        setChartData();
+                                    } else {
+                                        chartConfigObject.dataSource = newVal;
+                                        if (chartConfigObject.dataFormat === 'xml') {
+                                            chart.setXMLData(newVal);
+                                        } else if (chartConfigObject.dataFormat === 'jsonurl') {
+                                            chart.setJSONUrl(newVal);
+                                        } else if (chartConfigObject.dataFormat === 'xmlurl') {
+                                            chart.setXMLUrl(newVal);
                                         }
                                     }
                                 }
                             }
                         },
-                        // data componenet observers
-                        DCObserver: {
-                            'chart': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.chart != newVal) {
-                                        dataStringStore.chart = newVal;
-                                        chartConfigObject.dataSource.chart = JSON.parse(newVal);
-                                        setChartData();
+                        'type': {
+                            ifExist: false,
+                            observer: function (newVal) {
+                                if (newVal && chartConfigObject.type != newVal) {
+                                    chartConfigObject.type = newVal;
+                                    // createFCChart();
+                                    chart.chartType(newVal);
+                                }
+                            }
+                        },
+                        'config': {
+                            ifExist: false,
+                            observer: function (newVal) {
+                                var configObj,
+                                    attr,
+                                    doReRender = false;
+                                if (newVal) {
+                                    configObj = JSON.parse(newVal);
+                                    for (attr in configObj) {
+                                        // detect the value change
+                                        if (chartConfigObject[attr] != configObj[attr]) {
+                                            doReRender = true;
+                                            chartConfigObject[attr] = configObj[attr];
+                                        }
+                                    }
+                                    if (doReRender) {
+                                        createFCChart();
                                     }
                                 }
-                            },
-                            'data': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.data != newVal) {
-                                        dataStringStore.data = newVal;
-                                        chartConfigObject.dataSource.data = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'categories': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.categories != newVal) {
-                                        dataStringStore.categories = newVal;
-                                        chartConfigObject.dataSource.categories = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'dataset': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.dataset != newVal) {
-                                        dataStringStore.dataset = newVal;
-                                        chartConfigObject.dataSource.dataset = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'linkeddata': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.linkeddata != newVal) {
-                                        dataStringStore.linkeddata = newVal;
-                                        chartConfigObject.dataSource.linkeddata = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'trendlines': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.trendlines != newVal) {
-                                        dataStringStore.trendlines = newVal;
-                                        chartConfigObject.dataSource.trendlines = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'vtrendlines': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.vtrendlines != newVal) {
-                                        dataStringStore.vtrendlines = newVal;
-                                        chartConfigObject.dataSource.vtrendlines = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'annotations': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.annotations != newVal) {
-                                        dataStringStore.annotations = newVal;
-                                        chartConfigObject.dataSource.annotations = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'colorrange': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.colorrange != newVal) {
-                                        dataStringStore.colorrange = newVal;
-                                        chartConfigObject.dataSource.colorrange = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'lineset': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.lineset != newVal) {
-                                        dataStringStore.lineset = newVal;
-                                        chartConfigObject.dataSource.lineset = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'axis': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.axis != newVal) {
-                                        dataStringStore.axis = newVal;
-                                        chartConfigObject.dataSource.axis = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'connectors': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.connectors != newVal) {
-                                        dataStringStore.connectors = newVal;
-                                        chartConfigObject.dataSource.connectors = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'pointers': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.pointers != newVal) {
-                                        dataStringStore.pointers = newVal;
-                                        chartConfigObject.dataSource.pointers = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'value': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.value != newVal) {
-                                        dataStringStore.value = newVal;
-                                        chartConfigObject.dataSource.value = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'processes': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.processes != newVal) {
-                                        dataStringStore.processes = newVal;
-                                        chartConfigObject.dataSource.processes = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'tasks': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.tasks != newVal) {
-                                        dataStringStore.tasks = newVal;
-                                        chartConfigObject.dataSource.tasks = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'rows': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.rows != newVal) {
-                                        dataStringStore.rows = newVal;
-                                        chartConfigObject.dataSource.rows = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'columns': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.columns != newVal) {
-                                        dataStringStore.columns = newVal;
-                                        chartConfigObject.dataSource.columns = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
-                            'map': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.map != newVal) {
-                                        dataStringStore.map = newVal;
-                                        chartConfigObject.dataSource.map = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                },
-                            },
-                            'markers': {
-                                ifExist: true,
-                                observer: function(newVal) {
-                                    if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.markers != newVal) {
-                                        dataStringStore.markers = newVal;
-                                        chartConfigObject.dataSource.markers = JSON.parse(newVal);
-                                        setChartData();
-                                    }
-                                }
-                            },
+                            }
                         }
                     },
+                    // data componenet observers
+                    DCObserver: {
+                        'chart': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.chart != newVal) {
+                                    dataStringStore.chart = newVal;
+                                    chartConfigObject.dataSource.chart = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'data': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.data != newVal) {
+                                    dataStringStore.data = newVal;
+                                    chartConfigObject.dataSource.data = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'categories': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.categories != newVal) {
+                                    dataStringStore.categories = newVal;
+                                    chartConfigObject.dataSource.categories = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'dataset': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.dataset != newVal) {
+                                    dataStringStore.dataset = newVal;
+                                    chartConfigObject.dataSource.dataset = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'linkeddata': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.linkeddata != newVal) {
+                                    dataStringStore.linkeddata = newVal;
+                                    chartConfigObject.dataSource.linkeddata = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'trendlines': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.trendlines != newVal) {
+                                    dataStringStore.trendlines = newVal;
+                                    chartConfigObject.dataSource.trendlines = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'vtrendlines': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.vtrendlines != newVal) {
+                                    dataStringStore.vtrendlines = newVal;
+                                    chartConfigObject.dataSource.vtrendlines = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'annotations': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.annotations != newVal) {
+                                    dataStringStore.annotations = newVal;
+                                    chartConfigObject.dataSource.annotations = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'colorrange': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.colorrange != newVal) {
+                                    dataStringStore.colorrange = newVal;
+                                    chartConfigObject.dataSource.colorrange = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'lineset': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.lineset != newVal) {
+                                    dataStringStore.lineset = newVal;
+                                    chartConfigObject.dataSource.lineset = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'axis': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.axis != newVal) {
+                                    dataStringStore.axis = newVal;
+                                    chartConfigObject.dataSource.axis = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'connectors': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.connectors != newVal) {
+                                    dataStringStore.connectors = newVal;
+                                    chartConfigObject.dataSource.connectors = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'pointers': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.pointers != newVal) {
+                                    dataStringStore.pointers = newVal;
+                                    chartConfigObject.dataSource.pointers = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'value': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.value != newVal) {
+                                    dataStringStore.value = newVal;
+                                    chartConfigObject.dataSource.value = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'processes': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.processes != newVal) {
+                                    dataStringStore.processes = newVal;
+                                    chartConfigObject.dataSource.processes = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'tasks': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.tasks != newVal) {
+                                    dataStringStore.tasks = newVal;
+                                    chartConfigObject.dataSource.tasks = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'rows': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.rows != newVal) {
+                                    dataStringStore.rows = newVal;
+                                    chartConfigObject.dataSource.rows = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'columns': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.columns != newVal) {
+                                    dataStringStore.columns = newVal;
+                                    chartConfigObject.dataSource.columns = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                        'map': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.map != newVal) {
+                                    dataStringStore.map = newVal;
+                                    chartConfigObject.dataSource.map = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            },
+                        },
+                        'markers': {
+                            ifExist: true,
+                            observer: function (newVal) {
+                                if (chartConfigObject.dataFormat === 'json' && typeof chartConfigObject.dataSource == "object" && dataStringStore.markers != newVal) {
+                                    dataStringStore.markers = newVal;
+                                    chartConfigObject.dataSource.markers = JSON.parse(newVal);
+                                    setChartData();
+                                }
+                            }
+                        },
+                    }
+                },
                     eventsObj = {},
                     attribs = Object.keys(attrs),
                     chart = null,
                     events = {
-                        '*': function(ev, props) {
+                        '*': function (ev, props) {
                             if (eventsObj.hasOwnProperty(ev.eventType)) {
                                 eventsObj[ev.eventType](ev, props);
                             }
                         }
                     },
                     setDataTimer,
-                    setChartData = function() {
+                    setChartData = function () {
                         // clear previous dataUpdate timer
                         if (setDataTimer) {
                             clearTimeout(setDataTimer);
                         }
                         // Update the data with setTimeout
                         // This will solve the issue of consiquitive data update within very small interval
-                        setDataTimer = setTimeout(function() {
+                        setDataTimer = setTimeout(function () {
                             if (chart && chart.setJSONData) {
                                 chart.setJSONData(chartConfigObject.dataSource);
                             }
-						}, 0);
+                        }, 0);
 
-						// chart.setJSONData(chartConfigObject.dataSource);
+                        // chart.setJSONData(chartConfigObject.dataSource);
                     },
-                    createFCChart = function() {
+                    createFCChart = function () {
                         // dispose if previous chart exists
                         if (chart && chart.dispose) {
                             chart.dispose();
                         }
                         chart = new FusionCharts(chartConfigObject);
                         /* @todo validate the ready function whether it can be replaced in a better way */
-                        angular.element(document).ready(function(){
-                            element.ready(function(){
-                                 // Render the chart only when angular is done compiling the element and DOM.
+                        angular.element(document).ready(function () {
+                            element.ready(function () {
+                                // Render the chart only when angular is done compiling the element and DOM.
                                 chart = chart.render();
                                 scope[attrs.chartobject] = chart;
                             });
@@ -386,7 +385,7 @@
                     eventScopeArr = attrs.events.split(".");
                     l = eventScopeArr.length;
                     _eobj = scope.$parent;
-                    for (i = 0; i < l; i += 1){
+                    for (i = 0; i < l; i += 1) {
                         _eobj = _eobj && _eobj[eventScopeArr[i]];
                     }
                     if (_eobj) {
@@ -405,7 +404,6 @@
                     }
                 }
 
-
                 chartConfigObject = {
                     type: attrs.type,
                     width: attrs.width,
@@ -416,7 +414,6 @@
                     dataSource: {},
                     events: events
                 };
-
 
                 for (observableAttr in observeConf.NDCObserver) {
                     attrConfig = observeConf.NDCObserver[observableAttr];
@@ -453,7 +450,6 @@
                 }
 
                 createFCChart();
-
             }
         };
     }]);

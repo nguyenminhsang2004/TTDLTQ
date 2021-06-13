@@ -1,9 +1,6 @@
 ﻿using ChartWeb.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ChartWeb.api
@@ -11,7 +8,8 @@ namespace ChartWeb.api
     [RoutePrefix("api/home")]
     public class HomeController : ApiController
     {
-        BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+        private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("revenue")]
         public string getRevenue()
         {
@@ -23,6 +21,7 @@ namespace ChartWeb.api
             });
             return revenue.ToString("##,#");
         }
+
         [Route("sales")]
         public string getSales()
         {
@@ -34,21 +33,25 @@ namespace ChartWeb.api
             });
             return sales.ToString("##,#");
         }
+
         [Route("brands")]
         public int getBrands()
         {
             return context.Dim_Brands.Count();
         }
+
         [Route("categories")]
         public int getCategories()
         {
             return context.Dim_Categories.Count();
         }
+
         [Route("products")]
         public int getProducts()
         {
             return context.Dim_Products.Count();
         }
+
         [Route("revenuebyyear")]
         public List<Revenue> getAllByYear()
         {
@@ -74,8 +77,8 @@ namespace ChartWeb.api
                 revenue = 0;
             });
             return res;
-
         }
+
         [Route("revenuetop")]
         public List<Revenue> getProduct()
         {
@@ -96,6 +99,7 @@ namespace ChartWeb.api
 
             return res.OrderByDescending(x => x.value).Take(10).ToList();
         }
+
         [Route("salescategories")]
         public List<Revenue> getSalesCategories()
         {
@@ -116,6 +120,7 @@ namespace ChartWeb.api
 
             return res;
         }
+
         [Route("inventory")]
         public List<Revenue> getInventory()
         {
@@ -165,8 +170,8 @@ namespace ChartWeb.api
                         value += (double)t.Revenue;
                 });
                 if (s.state == "NY") id = "NA";
-                if (id == "SA") temp += value/revenue;
-                res.Add(new ViewWorldChart { id = id, value = (value/revenue).ToString(), showLabel = "1" });
+                if (id == "SA") temp += value / revenue;
+                res.Add(new ViewWorldChart { id = id, value = (value / revenue).ToString(), showLabel = "1" });
             });
 
             res.ForEach(x =>
@@ -175,6 +180,5 @@ namespace ChartWeb.api
             });
             return res;
         }
-
     }
 }

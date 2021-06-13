@@ -27,14 +27,14 @@ app.controller('storesController', function ($scope, $http, $rootScope) {
     $scope.modelLabel = [];
     $scope.modelRevenue = [];
     $http.get('/api/dates/year')
-    .then(
-        (res) => {
-            angular.forEach(res.data, (item) => {
-                $scope.modelLabel.push(item);
-            });
-        },
-        (err) => { console.log(err); }
-    );
+        .then(
+            (res) => {
+                angular.forEach(res.data, (item) => {
+                    $scope.modelLabel.push(item);
+                });
+            },
+            (err) => { console.log(err); }
+        );
     $http.get("/api/stores/revenue/?month=0")
         .then(
             (res) => {
@@ -46,7 +46,7 @@ app.controller('storesController', function ($scope, $http, $rootScope) {
             (err) => { console.log(err.data); }
         );
 
-    $scope.viewChartRevenue($scope.modelLabel,$scope.modelRevenue, "Doanh thu của các cửa hàng 2016 - 2018 (USD).");
+    $scope.viewChartRevenue($scope.modelLabel, $scope.modelRevenue, "Doanh thu của các cửa hàng 2016 - 2018 (USD).");
 
     $scope.viewChartSales = (label, model, title) => {
         $scope.myDataSourceSales = {
@@ -81,7 +81,7 @@ app.controller('storesController', function ($scope, $http, $rootScope) {
             (err) => { console.log(err.data); }
         );
 
-    $scope.viewChartSales($scope.modelLabel,$scope.modelSales, "Doanh số của từng cửa hàng 2016 - 2018.");
+    $scope.viewChartSales($scope.modelLabel, $scope.modelSales, "Doanh số của từng cửa hàng 2016 - 2018.");
     /*end load chart default*/
 
     $scope.months = ["None", 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -118,11 +118,10 @@ app.controller('storesController', function ($scope, $http, $rootScope) {
                     angular.forEach(res.data, (item) => {
                         $scope.valueRevenue.push(item);
                     });
-                    $scope.viewChartRevenue($scope.modelLabel,$scope.valueRevenue, $scope.title);
+                    $scope.viewChartRevenue($scope.modelLabel, $scope.valueRevenue, $scope.title);
                 },
                 (err) => { console.log(err); }
             );
-
     }
 
     $scope.changeChartSales = (month) => {
@@ -140,10 +139,9 @@ app.controller('storesController', function ($scope, $http, $rootScope) {
                     angular.forEach(res.data, (item) => {
                         $scope.valueSales.push(item);
                     });
-                    $scope.viewChartSales($scope.modelLabel,$scope.valueSales, $scope.title);
+                    $scope.viewChartSales($scope.modelLabel, $scope.valueSales, $scope.title);
                 },
                 (err) => { console.log(err); }
             );
-
     }
 })

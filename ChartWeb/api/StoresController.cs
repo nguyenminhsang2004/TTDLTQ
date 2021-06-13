@@ -1,9 +1,6 @@
 ﻿using ChartWeb.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ChartWeb.api
@@ -11,7 +8,8 @@ namespace ChartWeb.api
     [RoutePrefix("api/stores")]
     public class StoresController : ApiController
     {
-        BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+        private BikeStoresDWHDataContext context = new BikeStoresDWHDataContext();
+
         [Route("revenue")]
         public List<StoreModel> getRevenue(int month)
         {
@@ -57,7 +55,7 @@ namespace ChartWeb.api
             });
             var stores = context.Dim_Stores.ToList();
             var model = context.Fact_Revenue_Sales.ToList();
-            if(month == 0)
+            if (month == 0)
             {
                 stores.ForEach(s =>
                 {
